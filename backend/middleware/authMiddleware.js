@@ -9,7 +9,7 @@ const protects = asyncHandler(async(req,res, next)=>{
         ("Bearer")) {
             try {
                 token = req.headers.authorization.split(' ')(1);
-                const decoded = jwt.verify(token.process.env.JWT_SECRETO);
+                const decoded = jwt.verify(token,process.env.JWT_SECRETO);
                 Request.usuario = await Usuario.findById(decoded.id).select('-password');
                 next();
             }catch(error){
