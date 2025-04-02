@@ -7,9 +7,9 @@ const{protects} = require('../middleware/authMiddleware');
 
 //router.route('/').get(getTareas).post(setTarea);
 router.get('/', protects, getTareas);
-router.post('/', setTarea);
-router.put('/', actualizarTarea);
-router.delete('/:id', eliminarTarea);
+router.post('/', protects,setTarea);
+router.put('/', protects, actualizarTarea);
+router.delete('/:id', protects, eliminarTarea);
 module.exports = router;
 
 

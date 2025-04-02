@@ -8,7 +8,7 @@ const asyncHandler = require('express-async-handler');
 }*/
 
 const getTareas = asyncHandler(async (req,res) => {
-   const tareas = await Tarea.find();
+   const tareas = await Tarea.find({usuario: req.usuario.id});
    res.status(200).json(tareas);
 });
 
@@ -18,7 +18,7 @@ const setTarea = asyncHandler(async (req, res)  =>{
       res.status(400);
       throw new Error('Por favor proporicione una tarea');
    }else{
-      const tarea = await Tarea.create({texto:req.body.texto});
+      const tarea = await Tarea.create({texto:req.body.texto, usuario:req.usuario.id});
       res.status(200).json(tarea);
    }
 });
