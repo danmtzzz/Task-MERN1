@@ -3,7 +3,13 @@ const router = express.Router();
 const {getTareas, setTarea,actualizarTarea,eliminarTarea} = require
 ('../controladores/controladorTareas');
 
-router.route('/').get(getTareas).post(setTarea);
+const{protects} = require('../middleware/authMiddleware');
+
+//router.route('/').get(getTareas).post(setTarea);
+router.get('/', protects, getTareas);
+router.post('/', setTarea);
+router.put('/', actualizarTarea);
+router.delete('/:id', eliminarTarea);
 module.exports = router;
 
 

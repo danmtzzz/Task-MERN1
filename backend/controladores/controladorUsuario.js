@@ -9,16 +9,16 @@ const registrarUsuario = asyncHandler(async (req,res)=>{
     if(! nombre || ! email || ! contraseña){
         res.status(400);
         throw new Error('Falta al menos uno de los campos');
-    }
-    else{
+    }else{
+   
     const usuarioExiste = await Usuario.findOne({email});
-    }
+    
 
     if(usuarioExiste){
         res.status(400);
         throw new Error('El usuario ya existe');
-    }
-    else{
+    }else{
+ 
 
   
     const salt = await bcrypt.genSalt(10);
@@ -28,7 +28,7 @@ const registrarUsuario = asyncHandler(async (req,res)=>{
         email,
         contraseña: ContraseñaHasheada
     });
-}
+
      
     if (usuario){
         res.status(201).json({_id:usuario.id, nombre:usuario.nombre,
@@ -39,12 +39,14 @@ const registrarUsuario = asyncHandler(async (req,res)=>{
         res.status(400);
         throw new Error('Datos de usuario no válidos');
     }
+}
+    }
 });
 
-const generarJWT = (id) => {
-    return jwt.sign({id},process.env.SECRETO_JWT,{
+/*const generarJWT = (id) => {
+    return jwt.sign({id},process.env.JWT_SECCRETO,{
         expiresIn:'5d'});
-};
+};*/
 
 const loginUsuario = asyncHandler(async(req,res) =>{
     const {email, contraseña} = req.body;
@@ -60,7 +62,9 @@ const loginUsuario = asyncHandler(async(req,res) =>{
     });
 
 const getUsuarioActual = asyncHandler(async(req,res)=>{
-    res.json({mensaje : 'Datos del usuario actual'});
+    const {_id, nombre, email} = await Usuario.findById(req.usuario.id);
+    res.status(200).json({id: _id, nombre, email});
+    //res.json({mensaje : 'Datos del usuario actual'});
 });
 
 const generarJWTtoken = (id) => {

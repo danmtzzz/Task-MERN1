@@ -1,6 +1,6 @@
+const DotEnv = require('dotenv').config();
 const express = require('express');
 const {errorHandler} = require('./middleware/errorMiddleWare');
-const DotEnv = require('dotenv').config();
 const puerto = process.env.PUERTO || 5000;
 const DBconexion = require('./config/database');
 
